@@ -6,7 +6,7 @@ client_id = ""  # put your client-id here
 api_url = 'https://api.twitch.tv/helix/clips?id='
 
 
-# Remove all non clip-ID related stuff from link
+# Remove all non clip-ID related stuff from link with huge if block
 # There are 3 types of clip links + straight ID we need to remove all non ID stuff and make api url
 def make_giga_url(url):
     url = str(url)  # in case of non str input
@@ -18,9 +18,11 @@ def make_giga_url(url):
     # print(url[start_check:end_check][5:])
     # print(extra_check)
     if extra_check != -1:
-        main_url = api_url + url[extra_check:end_check][16:]
+        main_url = api_url + url[extra_check:][16:]
     elif end_check == -1 and start_check == -1:
         main_url = api_url + url
+    elif end_check == -1:
+        main_url = api_url + url[start_check:][5:]
     else:
         main_url = api_url + url[start_check:end_check][5:]
     return main_url
